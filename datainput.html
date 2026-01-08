@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <!-- 🔍 SEO: Agar muncul di pencarian Google -->
+  <title>Generator Agenda Resmi Kalurahan - Bupati Bantul & Trirenggo</title>
+  <meta name="description" content="Buat agenda resmi otomatis untuk keperluan kelurahan/kalurahan di Bantul. Support Surat Bupati Bantul dan Panitia Trirenggo. Gratis, cepat, dan bisa dipakai di HP Android.">
+  <meta name="keywords" content="agenda kelurahan, surat masuk bantul, generator agenda trirenggo, aplikasi surat kalurahan, agenda resmi, bupati bantul, panitia trirenggo">
+  <meta name="author" content="Admin Kalurahan">
+  <meta name="robots" content="index, follow">
+
+  <!-- 📱 Agar bisa dipasang di HP Android -->
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📅</text></svg>">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', 'Noto Sans', sans-serif;
+      background: #f0f7ff;
+      color: #1e293b;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 28px;
+      padding: 16px;
+    }
+    .header h1 {
+      font-size: 26px;
+      color: #2563eb;
+      margin-bottom: 8px;
+    }
+    .header p {
+      color: #475569;
+      font-size: 16px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      padding: 28px;
+      margin-bottom: 28px;
+    }
+    .form-group { margin-bottom: 20px; }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 15px;
+    }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn:hover { background: #1d4ed8; }
+    .agenda-result {
+      background: #f8fafc;
+      padding: 24px;
+      border-radius: 12px;
+      border-left: 4px solid #2563eb;
+      font-family: 'Courier New', monospace;
+      white-space: pre-wrap;
+      font-size: 16px;
+    }
+    .empty { text-align: center; color: #94a3b8; padding: 30px; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>📅 Generator Agenda Resmi Kalurahan</h1>
+    <p>Buat agenda otomatis untuk Surat Bupati Bantul, Panitia Trirenggo, dan keperluan administrasi kelurahan lainnya.</p>
+  </div>
+
+  <div class="card">
+    <div class="form-group">
+      <label>Tanggal Acara</label>
+      <input type="date" id="tanggal" value="2026-01-05">
+    </div>
+    <div class="form-group">
+      <label>Pengirim</label>
+      <input type="text" id="pengirim" placeholder="Contoh: Bupati Bantul">
+    </div>
+    <div class="form-group">
+      <label>Acara</label>
+      <input type="text" id="acara" placeholder="Contoh: Sosialisasi Perda Kab. Bantul">
+    </div>
+    <div class="form-group">
+      <label>Waktu</label>
+      <input type="text" id="waktu" value="Pkl.08.30 WIB - Selesai">
+    </div>
+    <div class="form-group">
+      <label>Tempat</label>
+      <input type="text" id="tempat" placeholder="Contoh: Ruang Mandhala Saba Madya">
+    </div>
+    <button class="btn" onclick="buatAgenda()">Buat Agenda Sekarang</button>
+  </div>
+
+  <div class="card">
+    <h2 style="font-size:18px; margin-bottom:16px;">📄 Hasil Agenda</h2>
+    <div id="hasil" class="agenda-result">
+      <div class="empty">Agenda akan muncul di sini setelah Anda klik tombol di atas.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function buatAgenda() {
+    const tgl = document.getElementById('tanggal').value;
+    const pengirim = document.getElementById('pengirim').value.trim();
+    const acara = document.getElementById('acara').value.trim();
+    const waktu = document.getElementById('waktu').value.trim();
+    const tempat = document.getElementById('tempat').value.trim();
+
+    if (!acara) {
+      alert("⚠️ Kolom 'Acara' harus diisi!");
+      return;
+    }
+
+    // Format tanggal ke bahasa Indonesia
+    const date = new Date(tgl);
+    const hari = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"][date.getDay()];
+    const bulan = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"][date.getMonth()];
+    const tglFormat = `${hari}, ${date.getDate()} ${bulan} ${date.getFullYear()}`;
+
+    let hasil = `${tglFormat}\n${waktu}\n➡️ ${acara}`;
+    if (tempat) hasil += `\ndi ${tempat}`;
+    if (pengirim) hasil += `\n\nDari: ${pengirim}`;
+
+    document.getElementById('hasil').textContent = hasil;
+  }
+
+  // Isi contoh saat pertama kali
+  window.onload = () => {
+    document.getElementById('pengirim').value = "Bupati Bantul";
+    document.getElementById('acara').value = "Sosialisasi Perda Kab. Bantul Nomor 3 Tahun 2023";
+    document.getElementById('tempat').value = "Ruang Mandhala Saba Madya Gedung Induk Lantai 3 Parasamya";
+  };
+</script>
+
+</body>
+</html>
